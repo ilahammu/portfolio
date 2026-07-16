@@ -15,7 +15,7 @@ class ResponsiveLayout extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         // Jika lebar layar kurang dari 800 pixel, render tampilan Mobile
-        if (constraints.maxWidth < 400) {
+        if (constraints.maxWidth < 500) {
           return mobileBody;
         } else {
           // Jika lebih dari 800 pixel, render tampilan Desktop

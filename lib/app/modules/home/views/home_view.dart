@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ilham_porto/app/modules/home/widgets/about_section.dart';
+import 'package:ilham_porto/app/modules/home/widgets/hero_section.dart';
+import 'package:ilham_porto/app/modules/home/widgets/projects_section.dart';
 import 'package:ilham_porto/core/responsive_layout.dart';
 
+//================================================================================
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -8,18 +12,23 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ResponsiveLayout(
-        mobileBody: Container(
-          color: Colors.blue[100],
-          child: const Center(
-            child: Text(
-              "Hp",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+        // --------------Tampilan Handphone--------------
+        mobileBody: SingleChildScrollView(
+          child: Column(
+            children: const [
+              HeroSection(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 0),
+                child: Divider(height: 0, thickness: 10, color: Colors.grey),
+              ),
+              AboutSection(),
+              ProjectsSection(),
+            ],
           ),
         ),
-
+        // --------------Tampilan Desktop--------------
         desktopBody: Container(
-          color: Colors.green[100],
+          color: const Color.fromARGB(255, 100, 130, 101),
           child: const Center(
             child: Text(
               "Desktop",
