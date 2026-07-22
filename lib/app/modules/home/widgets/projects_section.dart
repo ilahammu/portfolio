@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // <-- Tambahan 1: Untuk pindah halaman (Routing)
+import 'package:ilham_porto/app/routes/app_pages.dart';
+import 'package:web/web.dart'
+    as web; // <-- Tambahan 2: Untuk membuka link web/GitHub
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
@@ -22,39 +26,66 @@ class ProjectsSection extends StatelessWidget {
           ),
           const SizedBox(height: 30),
 
-          // 2. Daftar Kartu Proyek
-          // Proyek 1: Mobile App
+          // Daftar project
+          // Proyek 1 :
           _buildProjectCard(
             title: "Monitoring Kambing (IoT)",
-            platform: "Mobile Application (Android)",
+            platform: "Desktop Application ",
             description:
-                "Aplikasi mobile lintas platform untuk memantau kondisi peternakan secara real-time berbasis Internet of Things.",
-            buttonText: "Download APK",
+                "Aplikasi mobile lintas platform untuk memantau"
+                "kondisi peternakan secara real-time berbasis Internet of Things.",
             icon: Icons.desktop_windows_outlined,
+            githubUrl: "https://github.com/ilahammu/modernfarming_app",
+            routeName: Routes.farmproject,
           ),
+
           const SizedBox(height: 20),
 
           // Proyek 2: Windows App (Riset Pindad)
           _buildProjectCard(
             title: "Smart Vest Research",
-            platform: "Desktop Application (Windows)",
+            platform: "Desktop Application ",
             description:
-                "Aplikasi desktop yang dikembangkan dalam proyek kolaborasi bersama PT Pindad (Persero) untuk memonitor data sensor rompi pintar.",
-            buttonText: "Download .exe",
+                "Aplikasi desktop yang dikembangkan dalam proyek "
+                "kolaborasi bersama PT Pindad (Persero) untuk memonitor"
+                "data sensor rompi pintar.",
             icon: Icons.desktop_windows_outlined,
+            githubUrl: "https://github.com/ilahammu/smart-vest-airsoft",
+            routeName: Routes.vestproject,
+          ),
+
+          _buildProjectCard(
+            title: "Monitoring Suhu Ruangan",
+            platform: "Mobile Application ",
+            description: "Null",
+            icon: Icons.smartphone_outlined,
+            githubUrl: "https://github.com/ilahammu/modernfarming_app",
+            routeName: Routes.farmproject,
+          ),
+
+          _buildProjectCard(
+            title: "Aplikasi To do list",
+            platform: "Mobile Application ",
+            description: "Null",
+            icon: Icons.desktop_windows_outlined,
+            icon2: Icons.smartphone,
+            githubUrl: "https://github.com/ilahammu/modernfarming_app",
+            routeName: Routes.farmproject,
           ),
         ],
       ),
     );
   }
 
-  // 3. Fungsi Pembuat Kartu (Widget Helper)
+  // 3. Fungsi Pembuat Kartu (Sudah dimodifikasi parameter-nya)
   Widget _buildProjectCard({
     required String title,
     required String platform,
     required String description,
-    required String buttonText,
     required IconData icon,
+    IconData? icon2,
+    required String githubUrl,
+    required String routeName,
   }) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 800),
@@ -62,7 +93,7 @@ class ProjectsSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200), // Garis tepi tipis
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -78,6 +109,8 @@ class ProjectsSection extends StatelessWidget {
           Row(
             children: [
               Icon(icon, size: 40, color: Colors.blueAccent),
+              Icon(icon2, size: 40, color: Colors.blueAccent),
+
               const SizedBox(width: 15),
               Expanded(
                 child: Column(
@@ -108,21 +141,48 @@ class ProjectsSection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
-          // Bagian Bawah: Tombol Aksi
-          ElevatedButton.icon(
-            onPressed: () {
-              // Logika untuk mengunduh file akan ditaruh di sini
-              print("Mendownload $title");
-            },
-            icon: const Icon(Icons.download, size: 18),
-            label: Text(buttonText),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+          // 4. Bagian Bawah: DUA TOMBOL BERDAMPINGAN
+          // Menggunakan Wrap agar jika layar kekecilan (HP), tombolnya otomatis turun ke bawah
+          Wrap(
+            spacing: 15, // Jarak horizontal antar tombol
+            runSpacing: 10, // Jarak vertikal jika tombol turun ke baris baru
+            children: [
+              // Tombol 1: View Full Description
+              ElevatedButton.icon(
+                onPressed: () {
+                  // <-- Mengeksekusi perpindahan halaman sesuai rute yang disuntikkan dari atas
+                  Get.toNamed(routeName);
+                },
+                icon: const Icon(Icons.article, size: 18),
+                label: const Text("View Full Description"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               ),
-            ),
+
+              // Tombol 2: Github Source Code
+              OutlinedButton.icon(
+                onPressed: () {
+                  // Perintah buka link GitHub di Tab Baru
+                  web.window.open(githubUrl, '_blank');
+                },
+                icon: const Icon(Icons.code, size: 18),
+                label: const Text("Github Source Code"),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.black87,
+                  side: const BorderSide(
+                    color: Colors.black26,
+                  ), // Garis luar tipis
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

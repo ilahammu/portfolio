@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web/web.dart' as web;
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -40,8 +41,13 @@ class HeroSection extends StatelessWidget {
           // 4. Tombol Download CV
           ElevatedButton.icon(
             onPressed: () {
-              // Nanti kita isi logika untuk download file PDF CV-mu
-              print("Tombol CV Ditekan!");
+              final web.HTMLAnchorElement anchor =
+                  web.document.createElement('a') as web.HTMLAnchorElement;
+              anchor.href =
+                  'assets/docs/cv_ilham.pdf'; // Pastikan path dan nama file PDF-mu sesuai
+              anchor.download =
+                  'CV_Ilham_Teknik_Komputer.pdf'; // Nama file saat diunduh
+              anchor.click();
             },
             icon: const Icon(Icons.download),
             label: const Text("Download CV"),
